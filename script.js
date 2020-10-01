@@ -7,13 +7,30 @@ const loader = document.querySelector('.loader');
 
 // NASA API
 const count = 10;
-// const apiKey = "DEMO_KEY";
 const apiKey = "5dIbMbuH7IAAp19JeBF3lXNchHbWKQd9pqY5HZdK";
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 let resultsArray = [];
 let favorites = {};
 
+// ======================================================================================
+
+// FUNCTIONS
+
+// Update DOM depending on which page the user is visiting
+function updateDOM(page) {
+  if (localStorage.getItem('nasaFavorites')) {
+    favorites = JSON.parse(localStorage.getItem('nasaFavorites'));
+  }
+
+  imagesContainer.textContent = '';
+
+  createDOMNodes(page);
+
+  showContent(page);
+}
+
+// Showing content depending on the page when the data finishes fetching
 function showContent(page) {
   window.scrollTo({ top: 0, behavior: 'instant' })
 
@@ -24,13 +41,14 @@ function showContent(page) {
      resultsNav.classList.add('hidden');
      favoritesNav.classList.remove('hidden');
   }
+
   loader.classList.add('hidden');
 }
+
 
 // Create DOM Nodes
 function createDOMNodes(page) {
   const currentArray = page === 'results' ? resultsArray : Object.values(favorites);
-  console.log('Current Array', page, currentArray); // FIXME: remove me
 
   currentArray.forEach(result => {
     const copyrightResult = result.copyright === undefined ? '' : result.copyright;
@@ -61,25 +79,12 @@ function createDOMNodes(page) {
       </div>
     `;
 
+    // Adding nodes to the images container
     imagesContainer.insertAdjacentHTML('beforeend', html);
   });
 }
 
-// Update DOM depending on which page the user is visiting
-function updateDOM(page) {
-  if (localStorage.getItem('nasaFavorites')) {
-    favorites = JSON.parse(localStorage.getItem('nasaFavorites'));
-    console.log('Favorites from Local Storage: ', favorites); // FIXME: remove me
-  }
-
-  imagesContainer.textContent = '';
-  
-  createDOMNodes(page);
-
-  showContent(page);
-}
-
-// Get 10 images from NASA API
+// Get 10 images from NASA API for results page (by clicking Load More)
 async function getNasaPictures() {
   // Show loader
   loader.classList.remove('hidden');
@@ -88,20 +93,20 @@ async function getNasaPictures() {
     const response = await fetch(apiUrl);
     resultsArray = await response.json();
     
-    updateDOM('results'); // FIXME: edit page
+    updateDOM('results');
   } catch (error) {
     console.log(error);
   }
 }
 
-// Save to Favorites
+// Save pictures to Favorites
 function saveFavorite(itemUrl) {
   // Loop through Results Array to select Favorite
   resultsArray.forEach(item => {
     if (item.url.includes(itemUrl) && !favorites[itemUrl]) {
       favorites[itemUrl] = item;
 
-      // Show Save Confirmation for 2 seconds
+      // Display Save Confirmation for 2 seconds (at the lower right corner)
       saveConfirmed.hidden = false;
       setTimeout(() => {
         saveConfirmed.hidden = true;
@@ -125,6 +130,7 @@ function removeFavorite(itemUrl) {
   }
 }
 
+// ======================================================================================
 
 // On Load
 getNasaPictures();
