@@ -1,8 +1,8 @@
 # NASA APOD Project
 
-If you don't know, APOD stands for Astronomy Picture of the Day, which is of the Open APIs from NASA. You can find more about [here](https://api.nasa.gov/).
+If you don't know, APOD stands for Astronomy Picture of the Day, which is of the Open APIs from NASA. You can find more about it [here](https://api.nasa.gov/).
 
-This application basically has 2 pages. One is for loading new pictures received from the API everytime **Load More** is clicked. The other one is for keeping your favorite shots, which is keep in the [browser local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+This application basically has 2 pages. One is for loading new pictures received from the API everytime **Load More** is clicked. The other one is for keeping your favorite shots, which is kept in the [browser local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
 **Each time the user clicks Load More**, a new request is sent to the APOD API and 10 new pictures will be returned and displayed on the page. While fetching, an animated SVG icon will be shown to inform the user.
 
