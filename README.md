@@ -25,4 +25,4 @@ Try it out **[here](https://tylernnguyen5.github.io/nasa-apod-project/)**
 - Simply clone the project
 - Use **Live Server** or similiar extension to view it in the browser
 
-*Notes: You might need to update the 'apiKey' variable with your API Key or 'DEMO_KEY' in order to make a valid request (in **script.js**). For more, please check out the documentation [here](https://api.nasa.gov/)*
+***Notes:** You might need to update **the 'apiKey' variable** with your API Key or 'DEMO_KEY' in order to make a valid request (in **script.js**). For more, please check out the documentation [here](https://api.nasa.gov/)*
